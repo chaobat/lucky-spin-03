@@ -8,14 +8,21 @@ public class Spin
     public string ImageDisplay { 
         get{
             //TODO: Add logic here to return either "block" or "none" based on whether the Numbers array contains the Luck value
-            return "";
+            foreach (int number in Numbers)
+            {
+                if (number == Luck)
+                {
+                    return "block";
+                }
+            }
+            return "none";
         }
     }
     Random random = new Random();
     //TODO: Adjust Constructor to generate random Numbers for the Spin
     public Spin()
     {
-
+      Numbers = new int[] {random.Next(1,9), random.Next(1,9), random.Next(1,9)};  
     }
 
 }
