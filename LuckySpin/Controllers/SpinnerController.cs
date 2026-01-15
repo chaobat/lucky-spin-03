@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 //TODO: import the LuckySpin.Models namespace into the Controller with a "using" command
 using LuckySpin.Models;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace LuckySpin.Controllers
 {
@@ -31,12 +32,12 @@ namespace LuckySpin.Controllers
         }
 
         [HttpPost] //POST for Index gathers the Player info collected by the form 
-        public IActionResult Index(int Luck)
+        public IActionResult Index(string PlayerName, int Luck)
         {
             //NOTE: At this point, the _spin object has already been created by DIJ and contains random Numbers
             //.     We only need to use the Player's form data to create a Player object and pass it to the Spin action 
             //TODO: Use the data from the form to create a new Player object assigning the luck value from the form
-            Player player = new Player {Luck = Luck};
+            Player player = new Player {Name = PlayerName, Luck = Luck};
             //TODO: Set a breakpoint on the following line of code and run the app in Debug mode
             //TODO: Instead of returning a View, the code below should "RedirectToAction" to the Spin Action
             //      Be sure to pass the Player object to the Spin action
@@ -54,6 +55,7 @@ namespace LuckySpin.Controllers
             //NOTE: At this point, the _spin object has already been created by DIJ and contains random Numbers
             //TODO: Use the the player's luck info to set the _spin object's Luck property appropriately
             _spin.Luck = player.Luck;
+            ViewBag.PlayerName = player.Name;
             //TODO: Set a breakpoint on the following line of code and run the app in Debug mode
             // Breakpoint three!
             return View(_spin); //TODO: Pass the adjusted local _spin object to the Spin View for display
